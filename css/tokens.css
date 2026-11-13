@@ -13,6 +13,9 @@
 
 @layer base {
   :root {
+    /* ---------- 1. Primitifs ----------
+       Palette « salle éteinte » : noirs, gris, craie, rouge du coin.
+       Chaque combattant a deux tons : clair (aplats) et profond (ombres). */
     --color-noir-950: #0b0b0c;
     --color-noir-900: #17171a;
     --color-noir-800: #2a2a2e;
@@ -37,6 +40,7 @@
     --color-tulipe-clair: #f98cc4;
     --color-tulipe-profond: #e3438a;
 
+    /* Échelle d'espacement brute, pas de 0,25rem. */
     --space-1: 0.25rem;
     --space-2: 0.5rem;
     --space-3: 0.75rem;
@@ -55,6 +59,7 @@
     --space-24: 6rem;
     --space-30: 7.5rem;
 
+    /* Formes « galet » : quatre rayons inégaux, voulus par la direction artistique. */
     --radius-pastille-raw: 10px 18px 12px 20px;
     --radius-galet-s-raw: 14px 22px 16px 24px;
     --radius-galet-raw: 22px 36px 26px 40px;
@@ -83,6 +88,8 @@
     --font-goldman: "Goldman", "Arial Black", system-ui, sans-serif;
     --font-archivo: "Archivo", system-ui, sans-serif;
 
+    /* ---------- 2. Sémantiques ----------
+       Sans color-scheme, light-dark() ne bascule pas et les éléments natifs restent clairs. */
     color-scheme: light dark;
 
     --color-surface: light-dark(var(--color-craie-100), var(--color-noir-950));
@@ -93,6 +100,7 @@
     --color-line: light-dark(var(--color-gris-400), var(--color-noir-800));
     --color-shadow: light-dark(var(--color-gris-400), var(--color-gris-600));
 
+    /* Couleur du champion choisi : craie par défaut, remplacée via :has() plus bas. */
     --color-champion: light-dark(var(--color-noir-950), var(--color-craie-100));
     --color-accent: var(--color-champion);
     --color-on-champion: light-dark(var(--color-craie-100), var(--color-noir-950));
@@ -100,6 +108,7 @@
     --color-border: light-dark(var(--color-noir-950), var(--color-accent));
     --color-focus: var(--color-text);
 
+    /* Le hero et l'en-tête desktop sont posés sur la vidéo : couleurs fixes, identiques dans les deux thèmes. */
     --color-stage: var(--color-rouge-coin);
     --color-on-stage: var(--color-craie-100);
     --color-stage-ink: var(--color-noir-950);
@@ -112,6 +121,7 @@
     --font-display: var(--font-goldman);
     --font-text: var(--font-archivo);
 
+    /* Typographie fluide : minimum lisible à 320 px, maximum à 1440 px, part en rem pour respecter le zoom. */
     --font-size-display: clamp(2.75rem, 0.25rem + 12.5vw, 12rem);
     --font-size-h2: clamp(2.125rem, 1.2rem + 3.9vw, 4.75rem);
     --font-size-h3: clamp(1.75rem, 1.4rem + 1vw, 2.25rem);
@@ -129,6 +139,70 @@
     --leading-display: 0.95;
     --leading-body: 1.5;
 
+    /* Alias nommés de l'échelle : seuls ceux-ci sont utilisés par les composants. */
+    --space-3xs: var(--space-1);
+    --space-2xs: var(--space-2);
+    --space-xs: var(--space-3);
+    --space-s: var(--space-4);
+    --space-sm: var(--space-5);
+    --space-m: var(--space-6);
+    --space-ml: var(--space-7);
+    --space-l: var(--space-8);
+    --space-xl: var(--space-9);
+    --space-2xl: var(--space-10);
+    --space-3xl: var(--space-12);
+    --space-4xl: var(--space-14);
+    --space-5xl: var(--space-16);
+    --space-6xl: var(--space-18);
+    --space-7xl: var(--space-20);
+    --space-8xl: var(--space-24);
+    --space-9xl: var(--space-30);
+    --size-logo: 5.5rem;
+    --size-logo-wide: 7.35rem;
+    --size-logo-footer: 13.25rem;
+    --font-size-button: 1.0625rem;
+    --motion-shift: 1rem;
+    --underline-offset: 0.2em;
+    --focus-offset: 5px;
+    --size-hero-video: 18.75rem;
+    --measure-lead: 34rem;
+    --size-button-min: 15rem;
+    --measure-title: 18ch;
+    --measure-text: 40rem;
+    --size-time: 4.5ch;
+    --font-size-h4: 1.25rem;
+    --size-avatar-xs: 2.5rem;
+    --size-avatar-s: clamp(3.5rem, 3rem + 2vw, 4.5rem);
+    --focus-offset-tight: 3px;
+    --size-avatar-m: 6rem;
+    --size-avatar-xl: 9.375rem;
+    --font-size-unknown: 2rem;
+    --font-size-unknown-l: 3.25rem;
+    --font-size-stat-s: 1.375rem;
+    --font-size-stat-l: 2.75rem;
+    --measure-card: 30rem;
+    --font-size-link: 0.9375rem;
+    --font-size-figure: 1.75rem;
+    --font-size-question: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+    --font-size-icon: 1.625rem;
+    --measure-footer: 19rem;
+    --font-size-nick: clamp(1.25rem, 1rem + 1vw, 1.875rem);
+    --size-portrait: 25rem;
+    --font-size-unknown-xl: clamp(6rem, 4rem + 8vw, 12rem);
+    --font-size-h3-l: clamp(1.75rem, 1.2rem + 1.8vw, 2.75rem);
+    --size-badge: 3rem;
+    --font-size-h5: 1.5rem;
+    --font-size-opponent: 1.125rem;
+    --font-size-clue: 1.1875rem;
+    --font-size-number: 3.5rem;
+    --size-avatar-duel: clamp(5.5rem, 4rem + 4vw, 7.5rem);
+    --font-size-vs: 1.875rem;
+    --font-size-tiny: 0.75rem;
+    --size-avatar-l: 8rem;
+    --measure-hero: 36rem;
+    --size-card-min: 20rem;
+    --size-stat-min: 9.5rem;
+    --size-tile-min: 15rem;
     --space-gutter: clamp(var(--space-5), -0.5rem + 7vw, var(--space-20));
     --space-section: clamp(var(--space-18), 2.5rem + 6vw, var(--space-30));
     --space-stack: clamp(var(--space-9), 1.5rem + 2.5vw, var(--space-14));
@@ -149,6 +223,8 @@
     --border-width-thin: var(--border-2);
     --border-width-thick: var(--border-6);
 
+    /* Ombres dures sans flou. Seul le décalage est un token : la couleur (--color-shadow) est lue
+       sur l'élément, ce qui permet au hero de la changer localement. */
     --shadow-button: var(--offset-6) var(--offset-6) 0;
     --shadow-button-pressed: var(--offset-3) var(--offset-3) 0;
     --shadow-card: var(--offset-8) var(--offset-8) 0;
@@ -163,6 +239,7 @@
     --ease-punch: var(--ease-rebond);
   }
 
+  /* Bascule CSS-only : cocher #theme-toggle inverse le thème du système, donc tous les light-dark() d'un coup. */
   @media (prefers-color-scheme: dark) {
     :root:has(#theme-toggle:checked) {
       color-scheme: light;
@@ -175,6 +252,7 @@
     }
   }
 
+  /* « Choisis ton camp » : le bouton radio coché recolore tout le site sans JavaScript. */
   :root:has(#champion-braise:checked) {
     --color-champion: var(--color-braise-clair);
   }
@@ -199,6 +277,7 @@
     --color-on-champion: var(--color-noir-950);
   }
 
+  /* Fiches combattants : la page prend la couleur du combattant présent dans le HTML. */
   :root:has(.profile--bulle) {
     --color-fighter: var(--color-bulle-clair);
     --color-fighter-deep: var(--color-bulle-profond);

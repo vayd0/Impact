@@ -6,12 +6,13 @@
    ========================================================================== */
 
 @layer components {
+  /* Lien d'évitement : caché hors écran, visible au premier Tab. */
   .skip-link {
     position: absolute;
     z-index: 2;
-    inset-block-start: var(--space-2);
-    inset-inline-start: var(--space-2);
-    padding: var(--space-3) var(--space-5);
+    inset-block-start: var(--space-2xs);
+    inset-inline-start: var(--space-2xs);
+    padding: var(--space-xs) var(--space-sm);
     border-radius: var(--radius-button-s);
     background-color: var(--color-text);
     color: var(--color-surface);
@@ -24,20 +25,21 @@
     }
   }
 
+  /* Logo en SVG inline (fill: currentColor) : il suit la couleur du texte dans les deux thèmes. */
   .logo {
     display: block;
-    inline-size: 5.5rem;
+    inline-size: var(--size-logo);
     block-size: auto;
     aspect-ratio: 117.641 / 40;
     fill: currentColor;
 
     @media (width >= 64rem) {
-      inline-size: 7.35rem;
+      inline-size: var(--size-logo-wide);
     }
   }
 
   .logo--footer {
-    inline-size: 13.25rem;
+    inline-size: var(--size-logo-footer);
   }
 
   .label {
@@ -47,18 +49,19 @@
     text-transform: uppercase;
   }
 
+  /* Bouton « galet » : au survol il s'enfonce (translate + ombre plus courte), sans toucher à la mise en page. */
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: var(--space-2);
-    padding: clamp(var(--space-4), 0.8rem + 0.5vw, var(--space-5)) clamp(var(--space-6), 1.2rem + 1vw, 2.125rem);
+    gap: var(--space-2xs);
+    padding: clamp(var(--space-s), 0.8rem + 0.5vw, var(--space-sm)) clamp(var(--space-m), 1.2rem + 1vw, 2.125rem);
     border: var(--border-width) solid var(--color-accent);
     border-radius: var(--radius-button);
     background-color: var(--color-accent);
     color: var(--color-on-accent);
     box-shadow: var(--shadow-button) var(--color-shadow);
-    font-size: 1.0625rem;
+    font-size: var(--font-size-button);
     font-weight: 700;
     letter-spacing: 0.05em;
     line-height: 1.2;
@@ -83,6 +86,7 @@
     }
   }
 
+  /* Variante secondaire : contour seul, s'inverse au survol. */
   .btn--ghost {
     background-color: transparent;
     color: var(--color-text);
@@ -98,7 +102,7 @@
 
   .btn--small {
     line-height: 1.5;
-    padding: var(--space-2) var(--space-4);
+    padding: var(--space-2xs) var(--space-s);
     border-radius: var(--radius-button-s);
     box-shadow: none;
     font-size: var(--font-size-label);
@@ -129,6 +133,8 @@
     }
   }
 
+  /* Menu mobile en Popover API : ouvert par le bouton Menu, sans JavaScript.
+     Sur desktop, on neutralise les styles du popover pour afficher la liste en ligne. */
   .nav {
     @media (width < 64rem) {
       inset: 0;
@@ -137,12 +143,12 @@
       max-inline-size: none;
       max-block-size: none;
       margin: 0;
-      padding: var(--space-20) var(--space-gutter) var(--space-10);
+      padding: var(--space-7xl) var(--space-gutter) var(--space-2xl);
       border: 0;
       background-color: var(--color-surface);
       color: var(--color-text);
       opacity: 0;
-      translate: 0 -1rem;
+      translate: 0 calc(-1 * var(--motion-shift));
       transition:
         opacity var(--duration-base) var(--ease-out),
         translate var(--duration-base) var(--ease-out),
@@ -152,7 +158,7 @@
       &:popover-open {
         display: flex;
         flex-direction: column;
-        gap: var(--space-10);
+        gap: var(--space-2xl);
         opacity: 1;
         translate: 0 0;
       }
@@ -172,22 +178,23 @@
     }
   }
 
+  /* État de départ de l'animation d'ouverture du popover. */
   @starting-style {
     .nav:popover-open {
       opacity: 0;
-      translate: 0 -1rem;
+      translate: 0 calc(-1 * var(--motion-shift));
     }
   }
 
   .nav__list {
     display: flex;
     flex-direction: column;
-    gap: var(--space-6);
+    gap: var(--space-m);
 
     @media (width >= 64rem) {
       flex-direction: row;
       flex-wrap: wrap;
-      gap: var(--space-9);
+      gap: var(--space-xl);
     }
   }
 
@@ -203,7 +210,7 @@
     &:hover {
       text-decoration: underline;
       text-decoration-thickness: var(--border-width);
-      text-underline-offset: 0.2em;
+      text-underline-offset: var(--underline-offset);
     }
 
     @media (width >= 64rem) {
@@ -222,11 +229,12 @@
     }
   }
 
+  /* Bascule de thème : la case est invisible mais focusable ; le libellé porte le focus via :has(). */
   .theme-switch {
     position: relative;
     display: inline-flex;
     align-items: center;
-    padding: var(--space-2) var(--space-4);
+    padding: var(--space-2xs) var(--space-s);
     border: var(--border-width) solid var(--color-accent);
     border-radius: var(--radius-button-s);
     color: var(--color-text);
@@ -247,7 +255,7 @@
 
     &:has(:focus-visible) {
       outline: var(--border-width) solid var(--color-focus);
-      outline-offset: 5px;
+      outline-offset: var(--focus-offset);
     }
   }
 
@@ -259,14 +267,15 @@
     cursor: pointer;
   }
 
-  .site-header__brand {
-    line-height: 0;
+  .hero__title {
+    font-size: var(--font-size-h3-l);
   }
 
   .hero__date {
     color: var(--color-text);
   }
 
+  /* Vidéo du hero : dans le flux sur mobile, en fond absolu derrière le contenu sur desktop. */
   .hero__media {
     position: relative;
     margin-inline: calc(-1 * var(--space-gutter));
@@ -282,7 +291,7 @@
   .hero__video {
     display: block;
     inline-size: 100%;
-    block-size: 18.75rem;
+    block-size: var(--size-hero-video);
     object-fit: cover;
 
     @media (width >= 64rem) {
@@ -291,7 +300,7 @@
   }
 
   .hero__lead {
-    max-inline-size: 34rem;
+    max-inline-size: var(--measure-lead);
     font-size: var(--font-size-lead-xl);
     line-height: 1.4;
   }
@@ -299,11 +308,11 @@
   .hero__actions {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-4) var(--space-6);
-    padding-block-start: var(--space-3);
+    gap: var(--space-s) var(--space-m);
+    padding-block-start: var(--space-xs);
 
     & > .btn {
-      flex: 1 1 15rem;
+      flex: 1 1 var(--size-button-min);
 
       @media (width >= 64rem) {
         flex: 0 0 auto;
@@ -313,25 +322,26 @@
 
   .section__intro {
     display: grid;
-    gap: var(--space-5);
+    gap: var(--space-sm);
   }
 
   .section__title {
-    max-inline-size: 18ch;
+    max-inline-size: var(--measure-title);
     font-size: var(--font-size-h2);
   }
 
   .section__lead {
-    max-inline-size: 40rem;
+    max-inline-size: var(--measure-text);
     color: var(--color-text-soft);
     font-size: var(--font-size-lead);
   }
 
+  /* Jour du programme : colonnes horaire | contenu, partagées par tous les créneaux via subgrid. */
   .day {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
     align-content: start;
-    column-gap: var(--space-6);
+    column-gap: var(--space-m);
   }
 
   .day__title {
@@ -339,9 +349,9 @@
     flex-wrap: wrap;
     align-items: baseline;
     justify-content: space-between;
-    gap: var(--space-2);
+    gap: var(--space-2xs);
     grid-column: 1 / -1;
-    padding-block-end: var(--space-4);
+    padding-block-end: var(--space-s);
     border-block-end: var(--border-width) solid var(--color-border);
     font-size: var(--font-size-day);
   }
@@ -363,12 +373,12 @@
     display: grid;
     grid-template-columns: subgrid;
     grid-column: 1 / -1;
-    padding-block: var(--space-6);
+    padding-block: var(--space-m);
     border-block-end: var(--border-width-thin) solid var(--color-line);
   }
 
   .slot__time {
-    min-inline-size: 4.5ch;
+    min-inline-size: var(--size-time);
     font-family: var(--font-display);
     font-size: var(--font-size-time);
     font-weight: 700;
@@ -377,12 +387,12 @@
 
   .slot__body {
     display: grid;
-    gap: var(--space-1);
+    gap: var(--space-3xs);
     align-content: start;
   }
 
   .slot__title {
-    font-size: 1.25rem;
+    font-size: var(--font-size-h4);
     font-weight: 700;
     line-height: 1.3;
   }
@@ -398,13 +408,13 @@
   .versus {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
-    padding-block-start: var(--space-2);
+    gap: var(--space-2xs);
+    padding-block-start: var(--space-2xs);
   }
 
   .versus__fighter {
-    inline-size: 2.5rem;
-    block-size: 2.5rem;
+    inline-size: var(--size-avatar-xs);
+    block-size: var(--size-avatar-xs);
     border-radius: var(--radius-medallion);
   }
 
@@ -425,11 +435,12 @@
     font-weight: 700;
   }
 
+  /* Sélecteur de champion : boutons radio natifs (accessibles au clavier), avatars en libellés. */
   .picker {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--space-4) var(--space-5);
+    gap: var(--space-s) var(--space-sm);
     margin: 0;
     padding: 0;
     border: 0;
@@ -443,7 +454,7 @@
   .picker__list {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-3) var(--space-5);
+    gap: var(--space-xs) var(--space-sm);
   }
 
   .picker__input {
@@ -456,7 +467,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-2);
+    gap: var(--space-2xs);
     color: var(--color-text-muted);
     font-size: var(--font-size-small);
     font-weight: 700;
@@ -471,10 +482,10 @@
   }
 
   .picker__avatar {
-    inline-size: clamp(3.5rem, 3rem + 2vw, 4.5rem);
+    inline-size: var(--size-avatar-s);
     block-size: auto;
     aspect-ratio: 1;
-    padding: var(--space-1);
+    padding: var(--space-3xs);
     border: var(--border-width) solid transparent;
     border-radius: var(--radius-medallion);
     transition:
@@ -496,15 +507,17 @@
 
   .picker__input:focus-visible + .picker__option > .picker__avatar {
     outline: var(--border-width) solid var(--color-focus);
-    outline-offset: 3px;
+    outline-offset: var(--focus-offset-tight);
   }
 
+  /* Carte combattant, pilotée par container query : verticale dans la grille,
+     horizontale quand son conteneur dépasse 40rem (bandeau du tenant du titre). */
   .fighter {
     position: relative;
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
     grid-template-rows: auto auto auto 1fr auto;
-    gap: var(--space-3);
+    gap: var(--space-xs);
     block-size: 100%;
     padding: var(--space-card);
     border: var(--border-width) solid var(--color-border);
@@ -529,9 +542,9 @@
         "avatar bio stats"
         "avatar lien stats";
       align-items: center;
-      column-gap: var(--space-10);
-      row-gap: var(--space-2);
-      padding: var(--space-8) var(--space-10);
+      column-gap: var(--space-2xl);
+      row-gap: var(--space-2xs);
+      padding: var(--space-l) var(--space-2xl);
       box-shadow: var(--shadow-card) var(--color-shadow);
 
       & > .fighter__avatar { grid-area: avatar; }
@@ -546,16 +559,18 @@
   .fighter__avatar {
     grid-row: 1;
     grid-column: 1;
-    inline-size: clamp(6rem, 4rem + 6cqi, 8rem);
+    inline-size: clamp(var(--size-avatar-m), 4rem + 6cqi, var(--size-avatar-l));
     block-size: auto;
     aspect-ratio: 1;
     border-radius: var(--radius-medallion);
 
     @container fighter (inline-size > 40rem) {
-      inline-size: 9.375rem;
+      inline-size: var(--size-avatar-xl);
     }
   }
 
+  /* Même nom de View Transition sur la carte et sur la fiche : le médaillon
+     se transforme en grand portrait en changeant de page. */
   .fighter__avatar--braise,
   .profile__media--braise {
     view-transition-name: portrait-braise;
@@ -581,6 +596,7 @@
     view-transition-name: portrait-ourson;
   }
 
+  /* Médaillon du combattant mystère : pas d'image, un « ? » en pointillés. */
   .medallion--unknown {
     display: grid;
     place-items: center;
@@ -589,7 +605,7 @@
     background-color: var(--color-surface);
     color: var(--color-text-muted);
     font-family: var(--font-display);
-    font-size: 2rem;
+    font-size: var(--font-size-unknown);
     font-weight: 700;
     line-height: 1;
   }
@@ -601,7 +617,7 @@
     background-color: var(--color-surface);
     color: var(--color-text-muted);
     font-family: var(--font-display);
-    font-size: 3.25rem;
+    font-size: var(--font-size-unknown-l);
     font-weight: 700;
   }
 
@@ -611,7 +627,7 @@
     grid-column: 2;
     align-content: start;
     justify-items: end;
-    gap: var(--space-2);
+    gap: var(--space-2xs);
     margin: 0;
     text-align: end;
   }
@@ -632,14 +648,14 @@
     & dd {
       margin: 0;
       font-family: var(--font-display);
-      font-size: 1.375rem;
+      font-size: var(--font-size-stat-s);
       font-weight: 700;
       line-height: 1.4;
     }
 
     @container fighter (inline-size > 40rem) {
       & dd {
-        font-size: 2.75rem;
+        font-size: var(--font-size-stat-l);
         line-height: 1.1;
       }
     }
@@ -649,7 +665,7 @@
     grid-row: 2;
     grid-column: 1 / -1;
     align-self: end;
-    padding-block-start: var(--space-2);
+    padding-block-start: var(--space-2xs);
     color: var(--color-text-muted);
     font-size: var(--font-size-small);
     font-weight: 700;
@@ -670,7 +686,7 @@
   .fighter__bio {
     grid-row: 4;
     grid-column: 1 / -1;
-    max-inline-size: 30rem;
+    max-inline-size: var(--measure-card);
     color: var(--color-text-soft);
   }
 
@@ -682,6 +698,7 @@
     justify-self: start;
   }
 
+  /* Lien étiré : toute la carte devient cliquable sans imbriquer de liens. */
   .fighter__link::after {
     content: "";
     position: absolute;
@@ -695,7 +712,7 @@
 
   .fighter:has(.fighter__link:focus-visible) {
     outline: var(--border-width) solid var(--color-focus);
-    outline-offset: 5px;
+    outline-offset: var(--focus-offset);
   }
 
   .fighter:has(.fighter__link:hover) .fighter__link {
@@ -704,10 +721,10 @@
   }
 
   .link-arrow {
-    padding-block: var(--space-2) var(--space-1);
+    padding-block: var(--space-2xs) var(--space-3xs);
     border-block-end: var(--border-width) solid var(--color-accent);
     color: var(--color-text);
-    font-size: 0.9375rem;
+    font-size: var(--font-size-link);
     font-weight: 700;
     letter-spacing: 0.06em;
     text-decoration: none;
@@ -725,7 +742,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    gap: var(--space-4);
+    gap: var(--space-s);
     block-size: 100%;
     padding: var(--space-card);
     border: var(--border-width) dashed var(--color-border);
@@ -744,6 +761,7 @@
     color: var(--color-text-soft);
   }
 
+  /* Offre de billetterie : ses 5 rangées viennent de la grille parente (subgrid). */
   .offer {
     display: grid;
     grid-row: 1 / -1;
@@ -754,7 +772,7 @@
       "prix"
       "liste"
       "action";
-    padding: var(--space-9);
+    padding: var(--space-xl);
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--radius-card);
     background-color: var(--color-surface-raised);
@@ -766,6 +784,8 @@
     }
   }
 
+  /* L'offre qui contient un badge est mise en avant automatiquement :
+     les tokens sont inversés localement, le contenu suit sans autre règle. */
   .offer:has(.offer__badge) {
     --color-text: var(--color-on-champion);
     --color-text-muted: var(--color-on-champion);
@@ -787,7 +807,7 @@
   .offer__badge {
     grid-area: badge;
     justify-self: start;
-    padding: var(--space-2) var(--space-4);
+    padding: var(--space-2xs) var(--space-s);
     border-radius: var(--radius-badge);
     background-color: var(--color-text);
     color: var(--color-on-accent);
@@ -814,17 +834,17 @@
   }
 
   .offer__currency {
-    font-size: 1.75rem;
+    font-size: var(--font-size-figure);
   }
 
   .offer__perks {
     display: grid;
     grid-area: liste;
     align-content: start;
-    gap: var(--space-3);
-    padding-block: var(--space-5);
+    gap: var(--space-xs);
+    padding-block: var(--space-sm);
     border-block-start: var(--border-width-thin) solid var(--color-line);
-    font-size: 1.0625rem;
+    font-size: var(--font-size-button);
   }
 
   .offer__cta {
@@ -832,6 +852,7 @@
     align-self: end;
   }
 
+  /* FAQ en <details>/<summary> : ouverture native, accessible et sans JavaScript. */
   .faq-item {
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--radius-panel);
@@ -850,10 +871,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-4);
-    padding: var(--space-6) var(--space-7);
+    gap: var(--space-s);
+    padding: var(--space-m) var(--space-ml);
     border-radius: inherit;
-    font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+    font-size: var(--font-size-question);
     font-weight: 700;
     line-height: 1.3;
     cursor: pointer;
@@ -867,7 +888,7 @@
       content: "+";
       flex: none;
       font-family: var(--font-display);
-      font-size: 1.625rem;
+      font-size: var(--font-size-icon);
       line-height: 1;
       transition: rotate var(--duration-base) var(--ease-punch);
     }
@@ -878,7 +899,7 @@
   }
 
   .faq-item__answer {
-    padding: 0 var(--space-7) var(--space-6);
+    padding: 0 var(--space-ml) var(--space-m);
     color: var(--color-text-soft);
 
     .faq-item[open] > & {
@@ -887,17 +908,17 @@
   }
 
   .site-footer__ropes {
-    block-size: var(--space-4);
-    border-block: var(--space-1) solid var(--color-line);
+    block-size: var(--space-s);
+    border-block: var(--space-3xs) solid var(--color-line);
   }
 
   .site-footer__brand {
     display: grid;
-    gap: var(--space-5);
+    gap: var(--space-sm);
     align-content: start;
 
     & > p {
-      max-inline-size: 19rem;
+      max-inline-size: var(--measure-footer);
       color: var(--color-text-soft);
     }
   }
@@ -911,8 +932,8 @@
 
   .site-footer__links {
     display: grid;
-    gap: var(--space-3);
-    padding-block-start: var(--space-4);
+    gap: var(--space-xs);
+    padding-block-start: var(--space-s);
 
     & a {
       color: var(--color-text);
@@ -942,6 +963,7 @@
     }
   }
 
+  /* --- Fiches combattants --- */
   .profile__name {
     font-size: var(--font-size-display);
     letter-spacing: -0.02em;
@@ -949,16 +971,16 @@
   }
 
   .profile__nick {
-    margin-block-start: var(--space-3);
+    margin-block-start: var(--space-xs);
     font-family: var(--font-display);
-    font-size: clamp(1.25rem, 1rem + 1vw, 1.875rem);
+    font-size: var(--font-size-nick);
     font-weight: 700;
     text-transform: uppercase;
   }
 
   .profile__media {
     justify-self: center;
-    inline-size: min(100%, 25rem);
+    inline-size: min(100%, var(--size-portrait));
     block-size: auto;
     aspect-ratio: 1;
     border: var(--border-width-thick) solid var(--color-accent);
@@ -971,28 +993,28 @@
     border-color: var(--color-accent);
     background-color: var(--color-on-fighter);
     color: var(--color-fighter);
-    inline-size: clamp(12rem, 8rem + 14vw, 25rem);
-    font-size: clamp(6rem, 4rem + 8vw, 12rem);
+    inline-size: clamp(12rem, 8rem + 14vw, var(--size-portrait));
+    font-size: var(--font-size-unknown-xl);
   }
 
   .profile__body {
     display: grid;
-    gap: var(--space-6);
+    gap: var(--space-m);
 
     & > p {
-      max-inline-size: 35rem;
-      font-size: clamp(1.0625rem, 0.9rem + 0.7vw, 1.3125rem);
+      max-inline-size: var(--measure-text);
+      font-size: var(--font-size-lead);
     }
   }
 
   .tags {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-3);
+    gap: var(--space-xs);
   }
 
   .tag {
-    padding: var(--space-2) var(--space-4);
+    padding: var(--space-2xs) var(--space-s);
     border: var(--border-width) solid var(--color-accent);
     border-radius: var(--radius-button-s);
     font-size: var(--font-size-label);
@@ -1010,8 +1032,8 @@
     display: flex;
     flex-direction: column-reverse;
     justify-content: flex-end;
-    gap: var(--space-2);
-    padding: var(--space-6) var(--space-7);
+    gap: var(--space-2xs);
+    padding: var(--space-m) var(--space-ml);
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--radius-stat);
 
@@ -1040,8 +1062,8 @@
 
     display: flex;
     flex-direction: column;
-    gap: var(--space-4);
-    padding: var(--space-10);
+    gap: var(--space-s);
+    padding: var(--space-2xl);
     border-radius: var(--radius-card);
     background-color: var(--color-fighter);
     color: var(--color-text);
@@ -1053,21 +1075,21 @@
   }
 
   .signature__title {
-    font-size: clamp(1.75rem, 1.2rem + 1.8vw, 2.75rem);
+    font-size: var(--font-size-h3-l);
   }
 
   .signature__figures {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-4) var(--space-7);
+    gap: var(--space-s) var(--space-ml);
     margin: auto 0 0;
-    padding-block-start: var(--space-5);
+    padding-block-start: var(--space-sm);
     border-block-start: var(--border-width-thin) solid var(--color-line);
 
     & > div {
       display: flex;
       flex-direction: column-reverse;
-      gap: var(--space-1);
+      gap: var(--space-3xs);
     }
 
     & dt {
@@ -1081,26 +1103,27 @@
     & dd {
       margin: 0;
       font-family: var(--font-display);
-      font-size: 1.75rem;
+      font-size: var(--font-size-figure);
       font-weight: 700;
     }
   }
 
   .history__title {
-    padding-block-end: var(--space-2);
+    padding-block-end: var(--space-2xs);
     color: var(--color-text-muted);
     font-family: var(--font-text);
   }
 
   .history__empty {
-    padding-block: var(--space-5);
+    padding-block: var(--space-sm);
     color: var(--color-text-soft);
   }
 
+  /* Historique : subgrid sur les colonnes résultat | adversaire | issue. */
   .bouts {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
-    column-gap: var(--space-5);
+    column-gap: var(--space-sm);
   }
 
   .bout {
@@ -1108,19 +1131,19 @@
     grid-template-columns: subgrid;
     grid-column: 1 / -1;
     align-items: center;
-    padding-block: var(--space-5);
+    padding-block: var(--space-sm);
     border-block-end: var(--border-width-thin) solid var(--color-line);
   }
 
   .bout__result {
     display: grid;
     place-items: center;
-    inline-size: 3rem;
-    block-size: 3rem;
+    inline-size: var(--size-badge);
+    block-size: var(--size-badge);
     border: var(--border-width) solid var(--color-text);
     border-radius: var(--radius-button-s);
     font-family: var(--font-display);
-    font-size: 1.5rem;
+    font-size: var(--font-size-h5);
   }
 
   .bout__result--win {
@@ -1129,7 +1152,7 @@
   }
 
   .bout__opponent {
-    font-size: 1.125rem;
+    font-size: var(--font-size-opponent);
     font-weight: 700;
   }
 
@@ -1150,17 +1173,17 @@
   .clue {
     display: grid;
     align-content: start;
-    gap: var(--space-3);
-    padding: var(--space-7);
+    gap: var(--space-xs);
+    padding: var(--space-ml);
     border: var(--border-width) dashed var(--color-text-muted);
     border-radius: var(--radius-stat);
-    font-size: 1.1875rem;
+    font-size: var(--font-size-clue);
   }
 
   .clue__number {
     color: var(--color-fighter);
     font-family: var(--font-display);
-    font-size: 3.5rem;
+    font-size: var(--font-size-number);
     line-height: 1;
   }
 
@@ -1190,18 +1213,18 @@
       "duel"
       "infos"
       "actions";
-    gap: var(--space-8);
+    gap: var(--space-l);
     padding: var(--space-card);
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--radius-card);
     background-color: var(--color-surface-raised);
 
     @media (width >= 64rem) {
-      grid-template-columns: auto minmax(0, 1fr) minmax(14rem, auto);
+      grid-template-columns: auto minmax(0, 1fr) minmax(var(--size-button-min), auto);
       grid-template-areas: "duel infos actions";
       align-items: center;
-      gap: var(--space-12);
-      padding: var(--space-12);
+      gap: var(--space-3xl);
+      padding: var(--space-3xl);
     }
   }
 
@@ -1209,10 +1232,10 @@
     display: flex;
     grid-area: duel;
     align-items: center;
-    gap: var(--space-4);
+    gap: var(--space-s);
 
     & > .next-fight__fighter {
-      inline-size: clamp(5.5rem, 4rem + 4vw, 7.5rem);
+      inline-size: var(--size-avatar-duel);
       block-size: auto;
       aspect-ratio: 1;
       border-radius: var(--radius-medallion);
@@ -1222,13 +1245,13 @@
   .next-fight__vs {
     color: var(--color-text-muted);
     font-family: var(--font-display);
-    font-size: 1.875rem;
+    font-size: var(--font-size-vs);
   }
 
   .next-fight__infos {
     display: grid;
     grid-area: infos;
-    gap: var(--space-3);
+    gap: var(--space-xs);
 
     & > p:last-child {
       color: var(--color-text-soft);
@@ -1240,21 +1263,21 @@
   }
 
   .next-fight__title {
-    font-size: clamp(1.75rem, 1.3rem + 1.5vw, 2.5rem);
+    font-size: var(--font-size-h3-l);
   }
 
   .next-fight__actions {
     display: grid;
     grid-area: actions;
-    gap: var(--space-4);
+    gap: var(--space-s);
   }
 
   .mini {
     display: flex;
     align-items: center;
-    gap: var(--space-4);
+    gap: var(--space-s);
     block-size: 100%;
-    padding: var(--space-4) var(--space-5);
+    padding: var(--space-s) var(--space-sm);
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--radius-tile);
     background-color: var(--color-surface-raised);
@@ -1270,14 +1293,14 @@
     &::after {
       content: "→";
       margin-inline-start: auto;
-      font-size: 1.25rem;
+      font-size: var(--font-size-h4);
       font-weight: 700;
     }
   }
 
   .mini__avatar {
     flex: none;
-    inline-size: 4.5rem;
+    inline-size: var(--size-avatar-s);
     block-size: auto;
     aspect-ratio: 1;
     border-radius: var(--radius-medallion);
@@ -1286,7 +1309,7 @@
   .mini__name {
     display: block;
     font-family: var(--font-display);
-    font-size: 1.5rem;
+    font-size: var(--font-size-h5);
     font-weight: 700;
     text-transform: uppercase;
   }
@@ -1294,12 +1317,13 @@
   .mini__role {
     display: block;
     color: var(--color-text-muted);
-    font-size: 0.75rem;
+    font-size: var(--font-size-tiny);
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
   }
 
+  /* Animations : uniquement transform/opacity (gérés par le compositeur, fluides). */
   @keyframes punch-in {
     0% {
       opacity: 0;
@@ -1322,23 +1346,26 @@
   @keyframes fade-down {
     from {
       opacity: 0;
-      translate: 0 -0.5rem;
+      translate: 0 calc(-0.5 * var(--motion-shift));
     }
   }
 
   @keyframes rise {
     from {
       opacity: 0;
-      translate: 0 2.5rem;
+      translate: 0 calc(2.5 * var(--motion-shift));
     }
   }
 
+  /* Les animations ne sont déclarées que si l'utilisateur n'a pas demandé à réduire
+     les mouvements : rien ne peut rester bloqué à opacity: 0. */
   @media (prefers-reduced-motion: no-preference) {
-    .hero__lead,
+    .hero__title,
     .profile__name {
       animation: punch-in var(--duration-slow) var(--ease-out) both;
     }
 
+    /* Animation pilotée par le scroll : Firefox ne la gère pas, les cartes restent alors simplement visibles. */
     @supports (animation-timeline: view()) {
       .fighter,
       .rules,

@@ -6,13 +6,14 @@
    ========================================================================== */
 
 @layer base {
+  /* View Transitions entre pages (amélioration progressive). */
   @view-transition {
     navigation: auto;
   }
 
   html {
     scroll-behavior: smooth;
-    scroll-padding-block-start: var(--space-4);
+    scroll-padding-block-start: var(--space-s);
   }
 
   body {
@@ -22,8 +23,10 @@
     font-family: var(--font-text);
     font-size: var(--font-size-body);
     line-height: var(--leading-body);
+    overflow-wrap: break-word;
   }
 
+  /* :is() factorise la police de titre ; spécificité de l'argument le plus fort. */
   :is(h1, h2, h3, h4) {
     font-family: var(--font-display);
     font-weight: 700;
@@ -31,6 +34,7 @@
     text-transform: uppercase;
   }
 
+  /* :where() : spécificité nulle, facile à surcharger dans les composants. */
   :where(h1, h2, h3) {
     text-wrap: balance;
   }
@@ -41,7 +45,7 @@
 
   a {
     color: var(--color-text);
-    text-underline-offset: 0.2em;
+    text-underline-offset: var(--underline-offset);
   }
 
   ::selection {
@@ -49,8 +53,9 @@
     color: var(--color-on-accent);
   }
 
+  /* Anneau de focus pour le clavier uniquement, contrasté dans les deux thèmes. */
   :focus-visible {
     outline: var(--border-width) solid var(--color-focus);
-    outline-offset: 5px;
+    outline-offset: var(--focus-offset);
   }
 }

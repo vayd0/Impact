@@ -6,6 +6,7 @@
    ========================================================================== */
 
 @layer utilities {
+  /* Masque visuellement un texte tout en le laissant lisible par les lecteurs d'écran. */
   .u-visually-hidden {
     position: absolute;
     inline-size: 1px;
@@ -15,6 +16,8 @@
     white-space: nowrap;
   }
 
+  /* Filet de sécurité : coupe toute animation et transition restante.
+     Il gagne sur les composants grâce à l'ordre des layers, sans !important. */
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
