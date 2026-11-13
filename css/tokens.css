@@ -1,0 +1,231 @@
+/* ==========================================================================
+   tokens.css — Design tokens (rangés dans le layer « base »)
+   --------------------------------------------------------------------------
+   Deux niveaux :
+   1. PRIMITIFS : valeurs brutes (palette, échelles). Nommés d'après ce
+      qu'ils SONT : --color-violet-600, --space-4…
+      → jamais utilisés directement dans les composants.
+   2. SÉMANTIQUES : rôles. Nommés d'après ce qu'ils FONT : --color-surface,
+      --color-accent, --space-section…
+      → les seuls utilisés dans layout.css et components.css.
+   Changer de thème = modifier les sémantiques, pas les composants.
+   ========================================================================== */
+
+@layer base {
+  :root {
+    --color-noir-950: #0b0b0c;
+    --color-noir-900: #17171a;
+    --color-noir-800: #2a2a2e;
+    --color-gris-700: #3a3a3e;
+    --color-gris-600: #5e5e64;
+    --color-gris-400: #9a9a9e;
+    --color-gris-300: #c9c8c4;
+    --color-craie-100: #f4f1ea;
+    --color-blanc: #ffffff;
+    --color-rouge-coin: #a90000;
+    --color-noir-voile: rgb(11 11 12 / 0.72);
+    --color-brun-nuit: #3a2410;
+
+    --color-braise-clair: #f59a45;
+    --color-braise-profond: #e25c12;
+    --color-bulle-clair: #6ccfe0;
+    --color-bulle-profond: #129bae;
+    --color-crete-clair: #5b86ea;
+    --color-crete-profond: #2350d2;
+    --color-ourson-clair: #b07048;
+    --color-ourson-profond: #6f4428;
+    --color-tulipe-clair: #f98cc4;
+    --color-tulipe-profond: #e3438a;
+
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-7: 1.75rem;
+    --space-8: 2rem;
+    --space-9: 2.25rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --space-14: 3.5rem;
+    --space-16: 4rem;
+    --space-18: 4.5rem;
+    --space-20: 5rem;
+    --space-24: 6rem;
+    --space-30: 7.5rem;
+
+    --radius-pastille-raw: 10px 18px 12px 20px;
+    --radius-galet-s-raw: 14px 22px 16px 24px;
+    --radius-galet-raw: 22px 36px 26px 40px;
+    --radius-tuile-raw: 22px 34px 26px 38px;
+    --radius-plaque-raw: 24px 36px 28px 40px;
+    --radius-stat-raw: 26px 38px 30px 44px;
+    --radius-dalle-raw: 30px 46px 34px 54px;
+    --radius-rond-raw: 50%;
+
+    --border-3: 3px;
+    --border-2: 2px;
+    --border-6: 6px;
+
+    --offset-3: 3px;
+    --offset-6: 6px;
+    --offset-8: 8px;
+    --offset-10: 10px;
+    --offset-12: 12px;
+
+    --duration-150: 150ms;
+    --duration-250: 250ms;
+    --duration-600: 600ms;
+    --ease-sortie: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --ease-rebond: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    --font-goldman: "Goldman", "Arial Black", system-ui, sans-serif;
+    --font-archivo: "Archivo", system-ui, sans-serif;
+
+    color-scheme: light dark;
+
+    --color-surface: light-dark(var(--color-craie-100), var(--color-noir-950));
+    --color-surface-raised: light-dark(var(--color-blanc), var(--color-noir-900));
+    --color-text: light-dark(var(--color-noir-950), var(--color-craie-100));
+    --color-text-soft: light-dark(var(--color-gris-700), var(--color-gris-300));
+    --color-text-muted: light-dark(var(--color-gris-600), var(--color-gris-400));
+    --color-line: light-dark(var(--color-gris-400), var(--color-noir-800));
+    --color-shadow: light-dark(var(--color-gris-400), var(--color-gris-600));
+
+    --color-champion: light-dark(var(--color-noir-950), var(--color-craie-100));
+    --color-accent: var(--color-champion);
+    --color-on-champion: light-dark(var(--color-craie-100), var(--color-noir-950));
+    --color-on-accent: var(--color-on-champion);
+    --color-border: light-dark(var(--color-noir-950), var(--color-accent));
+    --color-focus: var(--color-text);
+
+    --color-stage: var(--color-rouge-coin);
+    --color-on-stage: var(--color-craie-100);
+    --color-stage-ink: var(--color-noir-950);
+    --color-stage-veil: var(--color-noir-voile);
+    --color-fighter: var(--color-braise-clair);
+    --color-fighter-deep: var(--color-braise-profond);
+    --color-on-fighter: var(--color-noir-950);
+    --color-on-fighter-soft: var(--color-brun-nuit);
+
+    --font-display: var(--font-goldman);
+    --font-text: var(--font-archivo);
+
+    --font-size-display: clamp(2.75rem, 0.25rem + 12.5vw, 12rem);
+    --font-size-h2: clamp(2.125rem, 1.2rem + 3.9vw, 4.75rem);
+    --font-size-h3: clamp(1.75rem, 1.4rem + 1vw, 2.25rem);
+    --font-size-h3-xl: clamp(2rem, 1.5rem + 1.6vw, 3rem);
+    --font-size-day: clamp(1.375rem, 1.1rem + 0.8vw, 1.875rem);
+    --font-size-time: clamp(1.1875rem, 1rem + 0.6vw, 1.625rem);
+    --font-size-stat: clamp(2.25rem, 1.8rem + 1.4vw, 3rem);
+    --font-size-price: clamp(3.5rem, 3rem + 1.5vw, 4.5rem);
+    --font-size-lead-xl: clamp(1.125rem, 0.8rem + 1.1vw, 1.5rem);
+    --font-size-lead: clamp(1.0625rem, 0.9rem + 0.6vw, 1.25rem);
+    --font-size-body: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+    --font-size-label: 0.875rem;
+    --font-size-small: 0.8125rem;
+    --letter-label: 0.12em;
+    --leading-display: 0.95;
+    --leading-body: 1.5;
+
+    --space-gutter: clamp(var(--space-5), -0.5rem + 7vw, var(--space-20));
+    --space-section: clamp(var(--space-18), 2.5rem + 6vw, var(--space-30));
+    --space-stack: clamp(var(--space-9), 1.5rem + 2.5vw, var(--space-14));
+    --space-card: clamp(var(--space-6), 1.2rem + 1vw, var(--space-8));
+    --space-gap: clamp(var(--space-6), 1rem + 1.5vw, var(--space-8));
+    --size-content: 80rem;
+
+    --radius-button: var(--radius-galet-raw);
+    --radius-button-s: var(--radius-galet-s-raw);
+    --radius-card: var(--radius-dalle-raw);
+    --radius-tile: var(--radius-tuile-raw);
+    --radius-panel: var(--radius-plaque-raw);
+    --radius-stat: var(--radius-stat-raw);
+    --radius-badge: var(--radius-pastille-raw);
+    --radius-medallion: var(--radius-rond-raw);
+
+    --border-width: var(--border-3);
+    --border-width-thin: var(--border-2);
+    --border-width-thick: var(--border-6);
+
+    --shadow-button: var(--offset-6) var(--offset-6) 0;
+    --shadow-button-pressed: var(--offset-3) var(--offset-3) 0;
+    --shadow-card: var(--offset-8) var(--offset-8) 0;
+    --shadow-featured: var(--offset-10) var(--offset-10) 0;
+    --shadow-medallion: var(--offset-12) var(--offset-12) 0;
+    --press-distance: var(--offset-3);
+
+    --duration-fast: var(--duration-150);
+    --duration-base: var(--duration-250);
+    --duration-slow: var(--duration-600);
+    --ease-out: var(--ease-sortie);
+    --ease-punch: var(--ease-rebond);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:has(#theme-toggle:checked) {
+      color-scheme: light;
+    }
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root:has(#theme-toggle:checked) {
+      color-scheme: dark;
+    }
+  }
+
+  :root:has(#champion-braise:checked) {
+    --color-champion: var(--color-braise-clair);
+  }
+
+  :root:has(#champion-bulle:checked) {
+    --color-champion: var(--color-bulle-clair);
+  }
+
+  :root:has(#champion-crete:checked) {
+    --color-champion: var(--color-crete-clair);
+  }
+
+  :root:has(#champion-tulipe:checked) {
+    --color-champion: var(--color-tulipe-clair);
+  }
+
+  :root:has(#champion-ourson:checked) {
+    --color-champion: var(--color-ourson-clair);
+  }
+
+  :root:has([name="champion"]:checked) {
+    --color-on-champion: var(--color-noir-950);
+  }
+
+  :root:has(.profile--bulle) {
+    --color-fighter: var(--color-bulle-clair);
+    --color-fighter-deep: var(--color-bulle-profond);
+    --color-on-fighter-soft: var(--color-noir-950);
+  }
+
+  :root:has(.profile--crete) {
+    --color-fighter: var(--color-crete-clair);
+    --color-fighter-deep: var(--color-crete-profond);
+    --color-on-fighter-soft: var(--color-noir-950);
+  }
+
+  :root:has(.profile--tulipe) {
+    --color-fighter: var(--color-tulipe-clair);
+    --color-fighter-deep: var(--color-tulipe-profond);
+    --color-on-fighter-soft: var(--color-noir-950);
+  }
+
+  :root:has(.profile--ourson) {
+    --color-fighter: var(--color-ourson-clair);
+    --color-fighter-deep: var(--color-ourson-profond);
+    --color-on-fighter-soft: var(--color-noir-950);
+  }
+
+  :root:has(.profile--mystere) {
+    --color-fighter: var(--color-gris-300);
+    --color-fighter-deep: var(--color-gris-600);
+    --color-on-fighter-soft: var(--color-noir-950);
+  }
+}

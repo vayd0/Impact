@@ -1,0 +1,56 @@
+/* ==========================================================================
+   base.css — Layer « base »
+   Rôle : styles par défaut des ÉLÉMENTS HTML (body, titres, liens, focus…).
+   Pas de classes ici : seulement des sélecteurs d'éléments, :where(), :is().
+   N'utilisez que des tokens SÉMANTIQUES.
+   ========================================================================== */
+
+@layer base {
+  @view-transition {
+    navigation: auto;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-block-start: var(--space-4);
+  }
+
+  body {
+    position: relative;
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    font-family: var(--font-text);
+    font-size: var(--font-size-body);
+    line-height: var(--leading-body);
+  }
+
+  :is(h1, h2, h3, h4) {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: var(--leading-display);
+    text-transform: uppercase;
+  }
+
+  :where(h1, h2, h3) {
+    text-wrap: balance;
+  }
+
+  :where(p, li, dd) {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: var(--color-text);
+    text-underline-offset: 0.2em;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+
+  :focus-visible {
+    outline: var(--border-width) solid var(--color-focus);
+    outline-offset: 5px;
+  }
+}
